@@ -4,3 +4,4 @@ coverage
 .vscode
 yarn.lock
 package-lock.json
+.sources
