@@ -6,11 +6,9 @@ if [ ! -f /etc/init.d/docker ]; then
 fi
 
 PORT=27017
-COLOR_ERROR="\e[31m"
 COLOR_CYAN="\e[36m"
 COLOR_DEFAULT="\e[0m"
 NAME_CONTAINER_MONGO=m1
-NAME_CONTAINER_FILES=py
 
 if ! docker ps --format "{{.Names}}" | grep -q "$NAME_CONTAINER_MONGO"; then
     docker run -d -p $PORT:27017 --name=$NAME_CONTAINER_MONGO -v "$PWD/myapp":/myapp mongo
