@@ -1,0 +1,17 @@
+#Imagen que voy a utilizar como base
+FROM python:3.8.16-alpine
+#Etiquetado
+LABEL project="Api python"
+
+# Instalamos dependencias
+RUN pip install requests
+
+WORKDIR /usr/src/app
+
+#Como metadato, indicamos que el contenedor utiliza el puerto 8000
+EXPOSE 8000
+
+#Modificaciones sobre la imagen que he utilizado como base, en este caso alpine
+COPY src/consumer .
+
+CMD ["python3", "./consumer.py"]
