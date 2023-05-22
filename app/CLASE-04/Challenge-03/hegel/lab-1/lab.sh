@@ -17,7 +17,7 @@ fi
 docker cp "$PWD/web/." $NAME_CONTAINER:$PATH_DIRECTORY/.
 docker exec -it $NAME_CONTAINER sh -c "cd $PATH_DIRECTORY; ls -la"
 
-echo "${COLOR_CYAN}
+echo -e "${COLOR_CYAN}
 Para poder ingresar al contenedor de nginx ejecutar el comando:
 docker exec -it $NAME_CONTAINER sh
 despues de ingresar puedes usar los comandos sh.${COLOR_DEFAULT}"
