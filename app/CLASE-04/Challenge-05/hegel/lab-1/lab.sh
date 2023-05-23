@@ -32,7 +32,7 @@ IP_ADDRESS_API=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddr
 echo -e "${COLOR_CYAN}Verificamos http://localhost:$PORT ${COLOR_DEFAULT}"
 sleep 1
 CONTENT=$(curl localhost:$PORT)
-echo -e "${COLOR_ALERT}$CONTENT${CONTENT}"
+echo -e "${COLOR_ALERT}$CONTENT${COLOR_DEFAULT}"
 sleep 1
 
 ### CONSUMER
@@ -57,3 +57,47 @@ echo -e "${COLOR_CYAN}En el browser ingresamos http://localhost:$PORT
 Para poder ingresar al contenedor de nginx ejecutar el comando:
 docker exec -it $NAME_CONTAINER sh
 despues de ingresar puedes usar los comandos sh.${COLOR_DEFAULT}"
+
+### LOGIN DOCKER HUB
+sleep 1
+echo -e "${COLOR_ALERT}Ingresar su usuario de docker hub${COLOR_DEFAULT}"
+read USERNAME
+echo -e "${COLOR_ALERT}Ingresar su contraseña de docker hub${COLOR_DEFAULT}"
+read -s -p "" PASSWORD
+
+echo $PASSWORD | docker login --username $USERNAME --password-stdin
+
+### CREAMOS LOS TAGS
+echo -e "${COLOR_CYAN}Creamos los tag de las imagenes...${COLOR_DEFAULT}"
+docker tag $NAME_IMAGE $USERNAME/$NAME_IMAGE
+docker tag $NAME_IMAGE_CONSUMER $USERNAME/$NAME_IMAGE_CONSUMER
+
+### PUBLICAMOS LAS IMAGENES
+echo -e "${COLOR_CYAN}Publicamos las imagenes...${COLOR_DEFAULT}"
+docker push $USERNAME/$NAME_IMAGE
+docker push $USERNAME/$NAME_IMAGE_CONSUMER
+
+### ELIMINAMOS CONTENEDORES E IMAGENES
+echo -e "${COLOR_CYAN}Eliminamos todos los contenedores${COLOR_DEFAULT}"
+docker rm -f $(docker ps -aq)
+echo -e "${COLOR_CYAN}Eliminamos todos las imagenes${COLOR_DEFAULT}"
+docker rmi -f $(docker images -aq)
+
+### VALIDAMOS SI EXISTE EL ARCHIVO DOCKER-COMPOSE
+if [ ! -f ./docker-compose.yml ]; then
+    echo "No existe el archivo docker-compose.yml"
+    exit;
+fi
+
+if ! command -v docker-compose >/dev/null 2>&1; then
+    echo "Docker Compose no está instalado."
+    exit;
+fi
+
+echo -e "${COLOR_CYAN}Ejecutamos el comando docker-compose up -d${COLOR_DEFAULT}"
+docker-compose up -d
+echo -e "${COLOR_CYAN}Verificamos que los contenedores esten corriendo de forma correcta${COLOR_DEFAULT}"
+CONTENT_CURL=$(curl localhost:$PORT)
+echo -e "${COLOR_ALERT}$CONTENT_CURL${COLOR_DEFAULT}"
+sleep 3
+docker logs $NAME_CONTAINER_CONSUMER
