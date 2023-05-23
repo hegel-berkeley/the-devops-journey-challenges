@@ -1,0 +1,17 @@
+version: '3'
+services:
+  service-flask-app:
+    container_name: api
+    image: hegelberkeley/simple-api:new
+    restart: always
+    ports:
+      - 8000:8000
+  consumer:
+    container_name: consumer
+    image: hegelberkeley/simple-consumer:new
+    restart: always
+    depends_on:
+      - service-flask-app
+    environment:
+      LOCAL: 1
+      PYTHONUNBUFFERED: "1"
