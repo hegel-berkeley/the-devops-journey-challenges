@@ -49,7 +49,7 @@ Para poder ver que el contenedor se inicio correctamente.${COLOR_DEFAULT}"
 
 sleep 2
 ### PUBLICAMOS LA IMAGENE
-echo -e "${COLOR_CYAN}Publicamos la imagene...${COLOR_DEFAULT}"
+echo -e "${COLOR_CYAN}Publicamos la imagen...${COLOR_DEFAULT}"
 docker push $USERNAME/$NAME_IMAGE
 sleep 40
 ### ELIMINAMOS CONTENEDORES E IMAGENES
