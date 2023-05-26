@@ -1,0 +1,18 @@
+version: '3'
+services:
+  backend_pokemon:
+    container_name: backend_pokemon
+    image: hegelberkeley/backend_pokemon:1.0.0
+    restart: always
+    ports:
+      - 8000:8000
+  frontend_pokemon:
+    container_name: frontend_pokemon
+    image: hegelberkeley/frontend_pokemon:1.0.0
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      REACT_APP_URL_DEVELOPMENT: http://localhost:8000
+    depends_on:
+      - backend_pokemon
