@@ -1,0 +1,26 @@
+version: '3.1'
+services:
+  db:
+    container_name: mariadb
+    image: mariadb:10.6
+    restart: always
+    volumes:
+      - ./lamp-app-ecommerce/assets/db-load-script.sql:/docker-entrypoint-initdb.d/db.sql
+    environment:
+      MARIADB_DATABASE: ecomdb
+      MARIADB_USER: ecomuser
+      MARIADB_PASSWORD: ecompassword
+      MARIADB_ROOT_PASSWORD: ecompassword
+  app:
+    container_name: app_ecommerce
+    image: app_ecommerce:1.0.0
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      DB_HOST: db
+      DB_USER: ecomuser
+      DB_PASSWORD: ecompassword
+      DB_DATABASE: ecomdb
+    depends_on:
+      - db
