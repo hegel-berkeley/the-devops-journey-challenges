@@ -1,0 +1,11 @@
+# Imagen base con el entorno de desarrollo de C#
+FROM mcr.microsoft.com/dotnet/sdk:7.0
+
+# Directorio de trabajo en el contenedor
+WORKDIR /app
+
+# Copiar los archivos al directorio
+COPY app/worker ./
+
+# Comando para ejecutar elarchivo Program.cs
+CMD ["dotnet", "run", "Program.cs"]
