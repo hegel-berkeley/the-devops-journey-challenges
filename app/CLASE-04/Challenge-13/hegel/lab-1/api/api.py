@@ -38,3 +38,6 @@ def user():
     db.users.insert_one(user)
 
     return 'Saved!', 201
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)
