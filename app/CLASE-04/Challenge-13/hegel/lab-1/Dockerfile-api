@@ -1,0 +1,13 @@
+#Imagen que voy a utilizar como base
+FROM python:3.8.16-alpine
+
+WORKDIR /usr/src/app
+
+COPY api/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY api .
+
+EXPOSE 5000
+
+CMD ["python3", "./api.py"]

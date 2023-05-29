@@ -1,0 +1,13 @@
+#Imagen que voy a utilizar como base
+FROM nginx:alpine
+
+#Etiquetado
+LABEL project="api"
+
+#copiamos el archivo de configuracion
+COPY nginx/conf.d/app.conf /etc/nginx/nginx.conf
+
+#Como metadato, indicamos que el contenedor utiliza el puerto 80
+EXPOSE 80
+
+CMD ["nginx","-g","daemon off;"]
