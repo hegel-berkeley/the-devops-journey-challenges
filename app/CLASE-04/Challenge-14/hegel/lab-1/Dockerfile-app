@@ -1,0 +1,16 @@
+#Imagen que voy a utilizar como base
+FROM node:16.20.0-alpine
+
+WORKDIR /app
+
+# Instalamos las dependencias
+COPY app/package.json ./
+
+RUN npm install
+
+# Copiamos los archivos
+COPY app .
+
+EXPOSE 3000
+
+CMD [ "npm", "run", "start"]
