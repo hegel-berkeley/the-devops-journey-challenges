@@ -1,0 +1,31 @@
+version: '3.1'
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    restart: always
+    networks:
+      - app_net
+  api:
+    container_name: api
+    image: api:1.0.0
+    restart: always
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongodb
+    networks:
+      - app_net
+  nginx:
+    container_name: nginx
+    image: nginx:1.0.0
+    restart: always
+    ports:
+      - 8080:80
+    depends_on:
+      - mongodb
+      - api
+    networks:
+      - app_net
+networks:
+  app_net:
