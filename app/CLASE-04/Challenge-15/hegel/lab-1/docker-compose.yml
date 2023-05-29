@@ -1,0 +1,8 @@
+version: '3'
+services:
+  app:
+    container_name: buscaminas
+    image: app:1.0.0
+    restart: always
+    ports:
+      - 81:80
