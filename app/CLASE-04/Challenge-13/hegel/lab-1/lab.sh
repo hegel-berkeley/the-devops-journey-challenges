@@ -34,7 +34,7 @@ docker images
 
 
 ############# NGINX #########################################################
-echo -e "${COLOR_CYAN}Creamos la imagen del app vote.${COLOR_DEFAULT}"
+echo -e "${COLOR_CYAN}Creamos la imagen del nginx.${COLOR_DEFAULT}"
 # Validamos si la imagen del app ya existe.
 if docker ps --format "{{.Image}}" | grep -q "$NGINX_NAME_IMAGE"; then
     docker rm -f $NGINX_NAME_CONTAINER
